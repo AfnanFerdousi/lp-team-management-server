@@ -96,7 +96,7 @@ UserSchema.statics.userExists = async function (
     );
 };
 
-UserSchema.methods.comparePassword = async function (
+UserSchema.statics.comparePassword = async function (
     givenPassword: string,
     savedPassword: string,
 ): Promise<boolean> {
