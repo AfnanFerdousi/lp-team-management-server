@@ -1,15 +1,10 @@
 import mongoose, { Schema, Document, Model } from "mongoose";
 import bcrypt from "bcrypt";
-import { IUser, UserModel } from "./user,interface";
+import { IUser, UserModel } from "./user.interface";
 import config from "../../../config";
 
 const UserSchema = new Schema<IUser, UserModel>(
     {
-        id: {
-            type: String,
-            required: true,
-            unique: true,
-        },
         username: {
             type: String,
             required: true,
@@ -91,13 +86,12 @@ const UserSchema = new Schema<IUser, UserModel>(
     },
 );
 
-
 UserSchema.statics.userExists = async function (
-    id: string,
+    email: string,
 ): Promise<IUser | null> {
     return await User.findOne(
-        { id },
-        { id: 1, password: 1, role: 1, needsPasswordChange: 1 },
+        { email },
+        { email: 1, password: 1, role: 1, needsPasswordChange: 1 },
     );
 };
 

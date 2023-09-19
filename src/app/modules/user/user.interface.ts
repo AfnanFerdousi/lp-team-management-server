@@ -1,7 +1,6 @@
 import mongoose, {  Model } from "mongoose";
 
 export interface IUser  {
-    id: string;
     username: string;
     email: string;
     password: string;
@@ -23,8 +22,8 @@ export interface IUser  {
 
 export type UserModel = {
     userExists(
-        id: string,
-    ): Promise<Pick<IUser, "id" | "password" | "role" | "needsPasswordChange">>;
+        email: string,
+    ): Promise<Pick<IUser, "email" | "password" | "role" | "needsPasswordChange">>;
     comparePassword(
         givenPassword: string,
         savedPassword: string,
