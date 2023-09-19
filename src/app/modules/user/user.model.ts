@@ -34,6 +34,7 @@ const UserSchema = new Schema<IUser, UserModel>(
             {
                 teamName: {
                     type: String,
+                    unique: true,
                     required: true,
                     minlength: 2,
                     maxlength: 50,

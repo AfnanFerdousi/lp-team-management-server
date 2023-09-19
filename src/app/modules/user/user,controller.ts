@@ -18,6 +18,23 @@ const createUser: RequestHandler = catchAsync(
     },
 );
 
+const acceptInvitation: RequestHandler = catchAsync(
+  async (req: Request, res: Response) => {
+    const userId = req.params.userId; // Assuming you pass the user ID as a parameter
+    const teamId = req.params.teamId; // Assuming you pass the team ID as a parameter
+
+    const result = await userService.acceptInvitation(userId, teamId);
+
+    sendResponse<IUser>(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: "Invitation accepted successfully!",
+      data: result,
+    });
+  }
+);
+
 export default {
     createUser,
+    acceptInvitation
 };
