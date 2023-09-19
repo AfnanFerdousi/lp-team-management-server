@@ -1,10 +1,10 @@
 import httpStatus from "http-status";
 import ApiError from "../../../errors/ApiError";
 import User from "../user/user.model";
-import { ILoginUser, ILoginUserResponse, IRefreshTokenResponse } from "./auth.interface";
+import { IChangePassword, ILoginUser, ILoginUserResponse, IRefreshTokenResponse } from "./auth.interface";
 import { jwtHelpers } from "../../../helpers/jwtHelpers";
 import config from "../../../config";
-import { Secret } from "jsonwebtoken";
+import { JwtPayload, Secret } from "jsonwebtoken";
 import { string } from "zod";
 
 const loginUser = async (payload: ILoginUser): Promise<ILoginUserResponse> => {
@@ -75,7 +75,37 @@ const refreshToken = async (
     }
 };
 
+
+const changePassword = async (
+    user: JwtPayload | null,
+    payload: IChangePassword
+): Promise<void> => {
+
+    const { oldPassword, newPassword } = payload;
+    
+    const userExists = await User.findOne({ email: user?.email }).select(
+        '+password'
+    );
+    
+    if (!userExists) {
+        throw new ApiError(httpStatus.NOT_FOUND, "User not found");
+    }
+
+    if (
+        userExists.password &&
+        !(await User.comparePassword(oldPassword, userExists.password))
+    ) {
+        throw new ApiError(httpStatus.UNAUTHORIZED, "Password is incorrect");
+    }
+
+    // update password
+    userExists.password = newPassword;
+    userExists.needsPasswordChange = false;
+    await userExists.save();
+}
+
 export default {
     loginUser,
-    refreshToken
+    refreshToken,
+    changePassword
 }
