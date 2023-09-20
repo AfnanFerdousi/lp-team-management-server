@@ -34,17 +34,15 @@ const acceptInvitation = async (
         throw new ApiError(httpStatus.NOT_FOUND, "Team not found");
     }
 
-    const teamCategory = team.teamCategory;
-
-    // Step 2: Update the User's teams array with teamName and teamCategory
-    const updatedUser = await User.findByIdAndUpdate(
-        userId,
+    // Step 2: Update the User's teams array to change the status to "active" and remove the notification
+    const updatedUser = await User.findOneAndUpdate(
         {
-            $addToSet: {
-                teams: {
-                    teamName: teamName,
-                    teamCategory: teamCategory,
-                },
+            _id: userId,
+            "teams.teamName": teamName,
+        },
+        {
+            $set: {
+                "teams.$.status": "active",
             },
             $pull: {
                 notifications: {
@@ -58,6 +56,7 @@ const acceptInvitation = async (
 
     return updatedUser;
 };
+
 const sendInvitation = async (
     email: string,
     teamName: string,
@@ -109,10 +108,19 @@ const sendInvitation = async (
         teamName: teamName,
         sentBy: admin?.email, // Optional chaining here
     };
+     const team = await Team.findOne({ teamName: teamName });
+    const teamData = {
+        teamName: teamName,
+        teamCategory: team?.teamCategory,
+        status: "pending",
+    }
 
     const updatedUser = await User.findByIdAndUpdate(
         user._id,
-        { $addToSet: { notifications: notificationData } },
+        {
+            $push: { teams: teamData },
+            $addToSet: { notifications: notificationData },
+        },
         { new: true },
     );
 
@@ -125,7 +133,12 @@ const rejectInvitation = async (
 ): Promise<IUser | null> => {
     const updatedUser = await User.findByIdAndUpdate(
         userId,
-        { $pull: { notifications: { teamName: teamName } } }, // Use an object to match specific notifications
+        {
+            $pull: {
+                notifications: { teamName: teamName },
+                teams: { teamName: teamName },
+            },
+        },
         { new: true },
     );
 
