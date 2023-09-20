@@ -5,6 +5,7 @@ import config from "../../../config";
 
 const UserSchema = new Schema<IUser, UserModel>(
     {
+        // Remove the custom "id" field
         username: {
             type: String,
             required: true,

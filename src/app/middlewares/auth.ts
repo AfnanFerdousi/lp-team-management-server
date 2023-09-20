@@ -8,20 +8,23 @@ import { jwtHelpers } from "../../helpers/jwtHelpers";
 const auth =
     (...requiredRoles: string[]) =>
     async (req: Request, res: Response, next: NextFunction) => {
+        console.log(req.headers);
         try {
             const token = req.headers.authorization;
             if (!token) {
                 throw new ApiError(
                     httpStatus.UNAUTHORIZED,
-                    "You are not authorized"
+                    "You are not authorized",
                 );
             }
             let verifiedUser = null;
 
-            verifiedUser = jwtHelpers.verifyToken
-                (token, config.jwt.jwt_secret as Secret);
+            verifiedUser = jwtHelpers.verifyToken(
+                token,
+                config.jwt.jwt_secret as Secret,
+            );
             req.user = verifiedUser;
-
+            console.log("verfied user", verifiedUser);
             if (
                 requiredRoles.length &&
                 !requiredRoles.includes(verifiedUser.role)

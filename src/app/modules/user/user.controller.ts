@@ -21,9 +21,9 @@ const createUser: RequestHandler = catchAsync(
 const acceptInvitation: RequestHandler = catchAsync(
   async (req: Request, res: Response) => {
     const userId = req.params.userId; // Assuming you pass the user ID as a parameter
-    const teamId = req.params.teamId; // Assuming you pass the team ID as a parameter
+    const teamName = req.params.teamName; // Assuming you pass the team ID as a parameter
 
-    const result = await userService.acceptInvitation(userId, teamId);
+    const result = await userService.acceptInvitation(userId, teamName);
 
     sendResponse<IUser>(res, {
       statusCode: httpStatus.OK,

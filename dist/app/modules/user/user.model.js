@@ -39,11 +39,7 @@ const mongoose_1 = __importStar(require("mongoose"));
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const config_1 = __importDefault(require("../../../config"));
 const UserSchema = new mongoose_1.Schema({
-    id: {
-        type: String,
-        required: true,
-        unique: true,
-    },
+    // Remove the custom "id" field
     username: {
         type: String,
         required: true,
@@ -73,6 +69,7 @@ const UserSchema = new mongoose_1.Schema({
         {
             teamName: {
                 type: String,
+                unique: true,
                 required: true,
                 minlength: 2,
                 maxlength: 50,
@@ -122,12 +119,12 @@ const UserSchema = new mongoose_1.Schema({
         virtuals: true,
     },
 });
-UserSchema.statics.userExists = function (id) {
+UserSchema.statics.userExists = function (email) {
     return __awaiter(this, void 0, void 0, function* () {
-        return yield User.findOne({ id }, { id: 1, password: 1, role: 1, needsPasswordChange: 1 });
+        return yield User.findOne({ email }, { email: 1, password: 1, role: 1, needsPasswordChange: 1 });
     });
 };
-UserSchema.methods.comparePassword = function (givenPassword, savedPassword) {
+UserSchema.statics.comparePassword = function (givenPassword, savedPassword) {
     return __awaiter(this, void 0, void 0, function* () {
         return yield bcrypt_1.default.compare(givenPassword, savedPassword);
     });
