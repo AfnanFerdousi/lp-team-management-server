@@ -59,10 +59,22 @@ const getSingleTeam = catchAsync(async (req: Request, res: Response) => {
     });
 });
 
+const deleteTeam = catchAsync(async (req: Request, res: Response) => {
+    const result = await teamService.deleteTeam(req.params.id);
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: "Team deleted successfully!",
+        data: result,
+    })
+})
+
 
 export default {
     createTeam,
     updateTeam,
     getTeams,
-    getSingleTeam
+    getSingleTeam,
+    deleteTeam
 };

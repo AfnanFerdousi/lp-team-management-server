@@ -20,6 +20,7 @@ router.patch(
     auth("admin"),
     teamController.updateTeam,
 )
+router.delete("/:id", auth("admin"), teamController.deleteTeam);
 
 
 export const TeamRoutes = router;

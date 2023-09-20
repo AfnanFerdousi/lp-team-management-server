@@ -74,9 +74,15 @@ const getSingleTeam = async (
     return [];
 };
 
+const deleteTeam = async (id: string) => {
+    const deletedTeam = await Team.findByIdAndDelete(id);
+    return deletedTeam;
+}
+
 export default {
     createTeam,
     updateTeam,
     getTeams,
     getSingleTeam,
+    deleteTeam
 };
