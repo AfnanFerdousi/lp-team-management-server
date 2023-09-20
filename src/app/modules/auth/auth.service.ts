@@ -26,7 +26,7 @@ const loginUser = async (payload: ILoginUser): Promise<ILoginUserResponse> => {
     const { email: userEmail, role, needsPasswordChange } = userExists;
     const accessToken = jwtHelpers.createToken(
         { userEmail, role },
-        config.jwt.jwt_refresh_secret as Secret,
+        config.jwt.jwt_secret as Secret,
         config.jwt.expires_in as string
     );
 
@@ -83,8 +83,8 @@ const changePassword = async (
 
     const { oldPassword, newPassword } = payload;
     
-    const userExists = await User.findOne({ email: user?.email }).select(
-        '+password'
+    const userExists = await User.findOne({ email: user?.userEmail }).select(
+        "+password",
     );
     
     if (!userExists) {
