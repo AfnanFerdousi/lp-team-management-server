@@ -8,7 +8,6 @@ import { jwtHelpers } from "../../helpers/jwtHelpers";
 const auth =
     (...requiredRoles: string[]) =>
     async (req: Request, res: Response, next: NextFunction) => {
-        console.log(req.headers);
         try {
             const token = req.headers.authorization;
             if (!token) {
@@ -24,7 +23,6 @@ const auth =
                 config.jwt.jwt_secret as Secret,
             );
             req.user = verifiedUser;
-            console.log("verfied user", verifiedUser);
             if (
                 requiredRoles.length &&
                 !requiredRoles.includes(verifiedUser.role)

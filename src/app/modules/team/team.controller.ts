@@ -16,6 +16,29 @@ const createTeam = catchAsync(async (req: Request, res: Response) => {
         });
 });
 
+const getTeams = catchAsync(async (req: Request, res: Response) => {
+    const result = await teamService.getTeams();
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: "Teams fetched successfully!",
+        data: result,
+    })
+})
+
+const updateTeam = catchAsync(async (req: Request, res: Response) => {
+    const result = await teamService.updateTeam(req.params.id, req.body);
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: "Team updated successfully!",
+        data: result,
+    })
+})
 export default {
     createTeam,
+    getTeams,
+    updateTeam
 };

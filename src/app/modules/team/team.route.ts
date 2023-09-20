@@ -6,12 +6,19 @@ import auth from '../../middlewares/auth';
 
 const router = express.Router();
 
+router.get("/", auth("admin"), teamController.getTeams);
 router.post(
     "/create-team",
     validateRequest(TeamValidation.createTeamValidation),
     auth("admin"),
     teamController.createTeam,
 );
+router.patch(
+    "/update-team/:id",
+    validateRequest(TeamValidation.updateTeamValidation),
+    auth("admin"),
+    teamController.updateTeam,
+)
 
 
 export const TeamRoutes = router;
