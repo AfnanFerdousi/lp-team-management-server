@@ -4,6 +4,7 @@ import { IUser } from "./user.interface";
 import User from "./user.model";
 import ApiError from "../../../errors/ApiError";
 import httpStatus from "http-status";
+import Team from "../team/team.model";
 
 const createUser = async (user: IUser): Promise<IUser | null> => {
     // Check if a user with the same email already exists
@@ -23,21 +24,40 @@ const createUser = async (user: IUser): Promise<IUser | null> => {
 };
 
 const acceptInvitation = async (
-    userId: string, // Use userId (auto-generated _id) instead of email
+    userId: string,
     teamName: string,
 ): Promise<IUser | null> => {
-    // Assuming you have logic to update the user's teams or other data when accepting an invitation
-   const updatedUser = await User.findByIdAndUpdate(
-       userId,
-       {
-           $addToSet: { teams: teamName }, // Add teamName to teams array
-           $pull: { notifications: { teamName: teamName } }, // Remove teamName from notifications
-       },
-       { new: true },
-   );
+    // Step 1: Find the teamCategory based on teamName
+    const team = await Team.findOne({ teamName: teamName });
+
+    if (!team) {
+        throw new ApiError(httpStatus.NOT_FOUND, "Team not found");
+    }
+
+    const teamCategory = team.teamCategory;
+
+    // Step 2: Update the User's teams array with teamName and teamCategory
+    const updatedUser = await User.findByIdAndUpdate(
+        userId,
+        {
+            $addToSet: {
+                teams: {
+                    teamName: teamName,
+                    teamCategory: teamCategory,
+                },
+            },
+            $pull: {
+                notifications: {
+                    teamName: teamName,
+                    type: "invitation",
+                },
+            },
+        },
+        { new: true },
+    );
+
     return updatedUser;
 };
-
 const sendInvitation = async (
     email: string,
     teamName: string,
