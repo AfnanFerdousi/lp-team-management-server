@@ -7,6 +7,7 @@ const router = express.Router();
 router.post("/create-user", userController.createUser);
 router.patch(
     "/:userId/accept-invitation/:teamName",
+    auth("user"),
     userController.acceptInvitation,
 );
 router.patch(
@@ -14,5 +15,9 @@ router.patch(
     auth("admin"),
     userController.sendInvitation,
 )
-
+router.patch(
+    "/:userId/reject-invitation/:teamName",
+    auth("user"),
+    userController.rejectInvitation
+)
 export const UserRoutes = router;

@@ -27,12 +27,14 @@ const acceptInvitation = async (
     teamName: string,
 ): Promise<IUser | null> => {
     // Assuming you have logic to update the user's teams or other data when accepting an invitation
-    const updatedUser = await User.findByIdAndUpdate(
-        userId, // Use userId (auto-generated _id)
-        { $addToSet: { teams: teamName } },
-        { new: true },
-    );
-
+   const updatedUser = await User.findByIdAndUpdate(
+       userId,
+       {
+           $addToSet: { teams: teamName }, // Add teamName to teams array
+           $pull: { notifications: { teamName: teamName } }, // Remove teamName from notifications
+       },
+       { new: true },
+   );
     return updatedUser;
 };
 
@@ -97,4 +99,22 @@ const sendInvitation = async (
     return updatedUser;
 };
 
-export default { createUser, acceptInvitation, sendInvitation };
+const rejectInvitation = async (
+    userId: string,
+    teamName: string,
+): Promise<IUser | null> => {
+    const updatedUser = await User.findByIdAndUpdate(
+        userId,
+        { $pull: { notifications: { teamName: teamName } } }, // Use an object to match specific notifications
+        { new: true },
+    );
+
+    return updatedUser;
+};
+
+export default {
+    createUser,
+    acceptInvitation,
+    sendInvitation,
+    rejectInvitation,
+};

@@ -53,8 +53,23 @@ const acceptInvitation: RequestHandler = catchAsync(
     },
 );
 
+const rejectInvitation: RequestHandler = catchAsync(
+    async (req: Request, res: Response) => {
+        const userId = req.params.userId; 
+        const teamName = req.params.teamName; 
+        const result = await userService.rejectInvitation(userId, teamName);
+
+        sendResponse<IUser>(res, {
+            statusCode: httpStatus.OK,
+            success: true,
+            message: "Invitation rejected successfully!",
+            data: result,
+        })
+    }
+)
 export default {
     createUser,
     acceptInvitation,
     sendInvitation,
+    rejectInvitation
 };
