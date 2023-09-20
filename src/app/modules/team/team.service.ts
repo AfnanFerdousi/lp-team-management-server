@@ -1,7 +1,10 @@
 import { ITeam } from "./team.interface";
 import Team from "./team.model";
+import User from "../user/user.model"; // Import the User model
 
-const createTeam = async (team: ITeam): Promise<ITeam | null> => {
+const createTeam = async (
+    team: ITeam
+): Promise<ITeam | null> => {
     // Check if a team with the same name already exists
     const existingTeam = await Team.findOne({ teamName: team.teamName });
 
@@ -12,8 +15,8 @@ const createTeam = async (team: ITeam): Promise<ITeam | null> => {
 
     const newTeam = await Team.create(team);
     return newTeam;
-}
+};
 
 export default {
-    createTeam
-}
+    createTeam,
+};

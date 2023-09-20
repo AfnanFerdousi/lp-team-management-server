@@ -1,11 +1,9 @@
-import mongoose, { Model, Types } from "mongoose";
-import { IUser } from "../user/user.interface";
+import  { Model } from "mongoose";
 
 export interface ITeam {
     teamName: string;
     teamCategory: string;
-    status: "active" | "pending" | "rejected";
-    admin: Types.ObjectId | IUser;
+    description: string;
     createdAt: Date;
     updatedAt: Date;
 }

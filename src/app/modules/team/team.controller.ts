@@ -4,8 +4,8 @@ import sendResponse from "../../../shared/sendResponse";
 import httpStatus from "http-status";
 import teamService from "./team.service";
 
-const createTeam = catchAsync(
-    async (req: Request, res: Response) => {
+const createTeam = catchAsync(async (req: Request, res: Response) => {
+    console.log(req.user)
         const result = await teamService.createTeam(req.body);
 
         sendResponse(res, {
@@ -13,10 +13,9 @@ const createTeam = catchAsync(
             success: true,
             message: "Team created successfully!",
             data: result,
-        })
-    }
-)
+        });
+});
 
-export {
-    createTeam
-}
+export default {
+    createTeam,
+};

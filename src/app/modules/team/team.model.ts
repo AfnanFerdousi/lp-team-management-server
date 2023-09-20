@@ -15,14 +15,8 @@ const TeamSchema = new Schema<ITeam, TeamModel>(
             required: true,
             maxlength: 100,
         },
-        status: {
+        description: {
             type: String,
-            enum: ["active", "pending", "rejected"],
-            default: "pending",
-        },
-        admin: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "User",
             required: true,
         },
     },
