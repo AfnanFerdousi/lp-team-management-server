@@ -22,6 +22,15 @@ const auth =
                 token,
                 config.jwt.jwt_secret as Secret,
             );
+
+            // Check if verifiedUser is null and handle it accordingly
+            if (!verifiedUser) {
+                throw new ApiError(
+                    httpStatus.UNAUTHORIZED,
+                    "You are not authorized",
+                );
+            }
+
             req.user = verifiedUser;
             if (
                 requiredRoles.length &&

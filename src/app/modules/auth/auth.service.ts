@@ -25,13 +25,13 @@ const loginUser = async (payload: ILoginUser): Promise<ILoginUserResponse> => {
     // create access token and refresh token
     const { email: userEmail, role, needsPasswordChange } = userExists;
     const accessToken = jwtHelpers.createToken(
-        { userEmail, role },
+        { email, role },
         config.jwt.jwt_secret as Secret,
         config.jwt.expires_in as string
     );
 
     const refreshToken = jwtHelpers.createToken(
-        { userEmail, role },
+        { email, role },
         config.jwt.jwt_refresh_secret as Secret,
         config.jwt.refresh_expires_in as string
     )
@@ -58,14 +58,14 @@ const refreshToken = async (
         throw new ApiError(httpStatus.FORBIDDEN, "Invalid refresh token");
     }
 
-    const { userEmail } = verfiedToken;
-    const userExists = await User.userExists(userEmail);
+    const { email } = verfiedToken;
+    const userExists = await User.userExists(email);
     if (!userExists) {
         throw new ApiError(httpStatus.NOT_FOUND, "User not found");
     }
 
     const accessToken = jwtHelpers.createToken(
-        { userEmail, role: userExists.role },
+        { email, role: userExists.role },
         config.jwt.jwt_refresh_secret as Secret,
         config.jwt.refresh_expires_in as string,
     );
@@ -83,7 +83,7 @@ const changePassword = async (
 
     const { oldPassword, newPassword } = payload;
     
-    const userExists = await User.findOne({ email: user?.userEmail }).select(
+    const userExists = await User.findOne({ email: user?.email }).select(
         "+password",
     );
     

@@ -1,6 +1,7 @@
 import mongoose, {  Model } from "mongoose";
 
 export interface IUser  {
+    _id: any;
     username: string;
     email: string;
     password: string;
@@ -14,7 +15,7 @@ export interface IUser  {
     notifications: Array<{
         type: "invitation";
         teamName: string;
-        sentBy: mongoose.Types.ObjectId | IUser;
+        sentBy: string;
         status: "accepted" | "rejected" | "pending";
     }>;
     needsPasswordChange: boolean;
