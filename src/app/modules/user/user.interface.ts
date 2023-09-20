@@ -6,6 +6,7 @@ export interface IUser  {
     password: string;
     role: "admin" | "user";
     teams: Array<{
+        [x: string]: any;
         teamName: string;
         teamCategory: string;
         status: "active" | "pending" | "rejected";

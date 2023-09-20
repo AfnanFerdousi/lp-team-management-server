@@ -7,6 +7,7 @@ import auth from '../../middlewares/auth';
 const router = express.Router();
 
 router.get("/", auth("admin"), teamController.getTeams);
+router.get("/:id", auth("user","admin"), teamController.getSingleTeam);
 router.post(
     "/create-team",
     validateRequest(TeamValidation.createTeamValidation),

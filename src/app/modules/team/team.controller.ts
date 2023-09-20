@@ -5,7 +5,6 @@ import httpStatus from "http-status";
 import teamService from "./team.service";
 
 const createTeam = catchAsync(async (req: Request, res: Response) => {
-    console.log(req.user)
         const result = await teamService.createTeam(req.body);
 
         sendResponse(res, {
@@ -16,16 +15,6 @@ const createTeam = catchAsync(async (req: Request, res: Response) => {
         });
 });
 
-const getTeams = catchAsync(async (req: Request, res: Response) => {
-    const result = await teamService.getTeams();
-
-    sendResponse(res, {
-        statusCode: httpStatus.OK,
-        success: true,
-        message: "Teams fetched successfully!",
-        data: result,
-    })
-})
 
 const updateTeam = catchAsync(async (req: Request, res: Response) => {
     const result = await teamService.updateTeam(req.params.id, req.body);
@@ -37,8 +26,43 @@ const updateTeam = catchAsync(async (req: Request, res: Response) => {
         data: result,
     })
 })
+
+const getTeams = catchAsync(async (req: Request, res: Response) => {
+    const result = await teamService.getTeams();
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: "Teams fetched successfully!",
+        data: result,
+    });
+});
+
+const getSingleTeam = catchAsync(async (req: Request, res: Response) => {
+    if (!req.user) {
+        // Handle the case where req.user is null, e.g., return an error response
+        sendResponse(res, {
+            statusCode: httpStatus.UNAUTHORIZED, // or any appropriate status code
+            success: false,
+            message: "User not authenticated",
+        });
+        return;
+    }
+
+    const result = await teamService.getSingleTeam(req.params.id, req.user);
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: "Team fetched successfully!",
+        data: result,
+    });
+});
+
+
 export default {
     createTeam,
+    updateTeam,
     getTeams,
-    updateTeam
+    getSingleTeam
 };
