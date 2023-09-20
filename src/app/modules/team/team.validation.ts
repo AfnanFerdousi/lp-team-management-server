@@ -36,6 +36,22 @@ const createTeamValidation = z.object({
     }),
 });
 
+const updateTeamValidation = z.object({
+    body: z.object({
+        teamName: z
+            .string()
+            .min(2, { message: errorMessages.teamName.minLength })
+            .max(50, { message: errorMessages.teamName.maxLength })
+            .optional(),
+        teamCategory: z
+            .string()
+            .max(100, { message: errorMessages.teamCategory.maxLength })
+            .optional(),
+        description: z.string().optional(),
+    }),
+});
+
 export const TeamValidation = {
     createTeamValidation,
+    updateTeamValidation,
 };
