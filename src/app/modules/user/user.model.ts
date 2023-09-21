@@ -45,6 +45,10 @@ const UserSchema = new Schema<IUser, UserModel>(
                     required: true,
                     maxlength: 100,
                 },
+                teamLogo: {
+                    type: String,
+                    required: true,
+                },
                 status: {
                     type: String,
                     enum: ["active", "pending", "rejected"],

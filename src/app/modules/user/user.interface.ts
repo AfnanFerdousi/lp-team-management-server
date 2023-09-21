@@ -10,6 +10,7 @@ export interface IUser  {
         [x: string]: any;
         teamName: string;
         teamCategory: string;
+        teamLogo: string;
         status: "active" | "pending" | "rejected";
     }>;
     notifications: Array<{
