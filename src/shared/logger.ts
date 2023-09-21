@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 import path from "path";
 import { createLogger, format, transports } from "winston";
 import DailyRotateFile from "winston-daily-rotate-file";
@@ -23,8 +22,23 @@ const logger = createLogger({
                 "logs",
                 "winston",
                 "successes",
-                "phu-%DATE%-success.log",
+                "tm-%DATE%-success.log",
             ),
+            datePattern: "YYYY-DD-MM-HH",
+            zippedArchive: true,
+            maxSize: "20m",
+            maxFiles: "14d",
+        }),
+        // Add a new transport for "debug" logs
+        new transports.DailyRotateFile({
+            filename: path.join(
+                process.cwd(),
+                "logs",
+                "winston",
+                "debug",
+                "tm-%DATE%-debug.log",
+            ),
+            level: "debug", // Set the logging level to "debug"
             datePattern: "YYYY-DD-MM-HH",
             zippedArchive: true,
             maxSize: "20m",
@@ -44,7 +58,7 @@ const errorLogger = createLogger({
                 "logs",
                 "winston",
                 "errors",
-                "phu-%DATE%-error.log",
+                "tm-%DATE%-error.log",
             ),
             datePattern: "YYYY-DD-MM-HH",
             zippedArchive: true,

@@ -1,0 +1,15 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 14
+    },
+    "auditLog": "E:\\RED LAPTOP\\Interview_tasks\\team-management-api\\logs\\winston\\successes\\.45dfcc1216f5b1d2e722e9e233417fe882ea329e-audit.json",
+    "files": [
+        {
+            "date": 1695282528132,
+            "name": "E:\\RED LAPTOP\\Interview_tasks\\team-management-api\\logs\\winston\\successes\\tm-2023-21-09-13-success.log",
+            "hash": "ab8be4ad062255e7ba68b8a00f2a20ac9afdcac049801d148e951f6f79bc4413"
+        }
+    ],
+    "hashType": "sha256"
+}
