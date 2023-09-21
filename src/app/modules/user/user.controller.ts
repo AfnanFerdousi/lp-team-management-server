@@ -67,9 +67,25 @@ const rejectInvitation: RequestHandler = catchAsync(
         })
     }
 )
+
+const getAllUsers = catchAsync(async (req: Request, res: Response) => {
+    const { teamName, status } = req.query;
+    const result = await userService.getAllUsers(
+        teamName as string,
+        status as string,
+    );
+    sendResponse<IUser[]>(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: "Users fetched successfully!",
+        data: result,
+    });
+});
+
 export default {
     createUser,
     acceptInvitation,
     sendInvitation,
-    rejectInvitation
+    rejectInvitation,
+    getAllUsers
 };

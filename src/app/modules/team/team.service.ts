@@ -76,6 +76,26 @@ const getSingleTeam = async (
 
 const deleteTeam = async (id: string) => {
     const deletedTeam = await Team.findByIdAndDelete(id);
+      if (!deletedTeam) {
+         throw new ApiError(
+             httpStatus.NOT_FOUND,
+             "Team doesn't exist",
+         );
+    }
+    
+     const usersToUpdate = await User.find({
+         "teams.teamName": deletedTeam.teamName,
+     });
+    
+    await Promise.all(
+        usersToUpdate.map(async user => {
+            user.teams = user.teams.filter(
+                team => team.teamName !== deletedTeam.teamName,
+            );
+            await user.save();
+        }),
+    );
+
     return deletedTeam;
 }
 

@@ -20,4 +20,5 @@ router.patch(
     auth("user"),
     userController.rejectInvitation
 )
+router.get("/", auth("admin"), userController.getAllUsers);
 export const UserRoutes = router;

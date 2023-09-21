@@ -62,7 +62,6 @@ const sendInvitation = async (
     teamName: string,
     admin: JwtPayload | IUser | null,
 ): Promise<IUser | null> => {
-    console.log(email);
     if (!admin) {
         throw new ApiError(httpStatus.UNAUTHORIZED, "Admin not authenticated");
     }
@@ -145,9 +144,54 @@ const rejectInvitation = async (
     return updatedUser;
 };
 
+const getAllUsers = async (
+    teamName: string,
+    userStatus: string,
+): Promise<IUser[]> => {
+    let users;
+    if (teamName || teamName && userStatus) {
+        const pipeline = [];
+
+        // Match users based on the teamName
+        if (teamName) {
+            pipeline.push({
+                $match: { teams: { $elemMatch: { teamName: teamName } } },
+            });
+        }
+
+        // Filter users within the matched teams based on the status
+        if (userStatus) {
+            pipeline.push({
+                $project: {
+                    teams: {
+                        $filter: {
+                            input: "$teams",
+                            as: "team",
+                            cond: { $eq: ["$$team.status", userStatus] },
+                        },
+                    },
+                    // Include other user fields you want to retrieve
+                    // Exclude the password field
+                    // For example: username, email, etc.
+                    username: 1,
+                    email: 1,
+                    // Add other fields as needed
+                },
+            });
+        }
+
+         users = await User.aggregate(pipeline);
+    }
+    
+    users = User.find()
+    return users;
+};
+
+
 export default {
     createUser,
     acceptInvitation,
     sendInvitation,
     rejectInvitation,
+    getAllUsers
 };
