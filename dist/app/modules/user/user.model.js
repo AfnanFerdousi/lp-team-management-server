@@ -96,7 +96,7 @@ const UserSchema = new mongoose_1.Schema({
                 type: String,
             },
             sentBy: {
-                type: mongoose_1.default.Schema.Types.ObjectId,
+                type: String,
                 ref: "User",
             },
             status: {

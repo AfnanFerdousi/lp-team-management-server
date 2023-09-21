@@ -29,8 +29,8 @@ const loginUser = (payload) => __awaiter(void 0, void 0, void 0, function* () {
     }
     // create access token and refresh token
     const { email: userEmail, role, needsPasswordChange } = userExists;
-    const accessToken = jwtHelpers_1.jwtHelpers.createToken({ userEmail, role }, config_1.default.jwt.jwt_refresh_secret, config_1.default.jwt.expires_in);
-    const refreshToken = jwtHelpers_1.jwtHelpers.createToken({ userEmail, role }, config_1.default.jwt.jwt_refresh_secret, config_1.default.jwt.refresh_expires_in);
+    const accessToken = jwtHelpers_1.jwtHelpers.createToken({ email, role }, config_1.default.jwt.jwt_secret, config_1.default.jwt.expires_in);
+    const refreshToken = jwtHelpers_1.jwtHelpers.createToken({ email, role }, config_1.default.jwt.jwt_refresh_secret, config_1.default.jwt.refresh_expires_in);
     return {
         accessToken,
         refreshToken,
@@ -45,19 +45,19 @@ const refreshToken = (refreshToken) => __awaiter(void 0, void 0, void 0, functio
     catch (e) {
         throw new ApiError_1.default(http_status_1.default.FORBIDDEN, "Invalid refresh token");
     }
-    const { userEmail } = verfiedToken;
-    const userExists = yield user_model_1.default.userExists(userEmail);
+    const { email } = verfiedToken;
+    const userExists = yield user_model_1.default.userExists(email);
     if (!userExists) {
         throw new ApiError_1.default(http_status_1.default.NOT_FOUND, "User not found");
     }
-    const accessToken = jwtHelpers_1.jwtHelpers.createToken({ userEmail, role: userExists.role }, config_1.default.jwt.jwt_refresh_secret, config_1.default.jwt.refresh_expires_in);
+    const accessToken = jwtHelpers_1.jwtHelpers.createToken({ email, role: userExists.role }, config_1.default.jwt.jwt_refresh_secret, config_1.default.jwt.refresh_expires_in);
     return {
         accessToken
     };
 });
 const changePassword = (user, payload) => __awaiter(void 0, void 0, void 0, function* () {
     const { oldPassword, newPassword } = payload;
-    const userExists = yield user_model_1.default.findOne({ email: user === null || user === void 0 ? void 0 : user.email }).select('+password');
+    const userExists = yield user_model_1.default.findOne({ email: user === null || user === void 0 ? void 0 : user.email }).select("+password");
     if (!userExists) {
         throw new ApiError_1.default(http_status_1.default.NOT_FOUND, "User not found");
     }
