@@ -107,12 +107,16 @@ const sendInvitation = async (
         teamName: teamName,
         sentBy: admin?.email, // Optional chaining here
     };
-     const team = await Team.findOne({ teamName: teamName });
+    const teamExist = await Team.findOne({ teamName: teamName });
+    if (!teamExist) {
+        throw new ApiError(httpStatus.NOT_FOUND, "Team not found");
+    }
+    
     const teamData = {
         teamName: teamName,
-        teamCategory: team?.teamCategory,
+        teamCategory: teamExist?.teamCategory,
         status: "pending",
-    }
+    };
 
     const updatedUser = await User.findByIdAndUpdate(
         user._id,

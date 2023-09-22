@@ -4,6 +4,7 @@ import userService from "./user.service";
 import sendResponse from "../../../shared/sendResponse";
 import { IUser } from "./user.interface";
 import httpStatus from "http-status";
+import { getSocketIO } from "../../../socket";
 
 const createUser: RequestHandler = catchAsync(
     async (req: Request, res: Response) => {
@@ -23,11 +24,15 @@ const sendInvitation: RequestHandler = catchAsync(
         const { email } = req.body; // Assuming you pass the user ID as a parameter
         const teamName = req.params.teamName; 
 
+  const timestamp = new Date();
         const result = await userService.sendInvitation(
             email,
             teamName,
             req.user,
         );
+
+          const io = getSocketIO();
+          io.emit("invitationSent", { teamName, user:req.user, timestamp });
 
         sendResponse<IUser>(res, {
             statusCode: httpStatus.OK,
@@ -40,9 +45,15 @@ const sendInvitation: RequestHandler = catchAsync(
 
 const acceptInvitation: RequestHandler = catchAsync(
     async (req: Request, res: Response) => {
-        const userId = req.params.userId; 
-        const teamName = req.params.teamName; 
+        const userId = req.params.userId;
+        const teamName = req.params.teamName;
         const result = await userService.acceptInvitation(userId, teamName);
+
+        // Get the current timestamp
+        const timestamp = new Date();
+
+        const io = getSocketIO();
+        io.emit("invitationAccepted", { teamName, user: req.user, timestamp });
 
         sendResponse<IUser>(res, {
             statusCode: httpStatus.OK,
@@ -55,18 +66,24 @@ const acceptInvitation: RequestHandler = catchAsync(
 
 const rejectInvitation: RequestHandler = catchAsync(
     async (req: Request, res: Response) => {
-        const userId = req.params.userId; 
-        const teamName = req.params.teamName; 
+        const userId = req.params.userId;
+        const teamName = req.params.teamName;
         const result = await userService.rejectInvitation(userId, teamName);
+
+        // Get the current timestamp
+        const timestamp = new Date();
+
+        const io = getSocketIO();
+        io.emit("invitationRejected", { teamName, user: req.user, timestamp });
 
         sendResponse<IUser>(res, {
             statusCode: httpStatus.OK,
             success: true,
             message: "Invitation rejected successfully!",
             data: result,
-        })
-    }
-)
+        });
+    },
+);
 
 const getAllUsers = catchAsync(async (req: Request, res: Response) => {
     const { teamName, status } = req.query;

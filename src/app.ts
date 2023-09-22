@@ -6,8 +6,14 @@ import httpStatus from "http-status";
 import cookieParser from "cookie-parser";
 
 const app: Application = express();
+const corsOptions = {
+    origin: "http://localhost:3000", // Allow requests from this origin
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    credentials: true, // Enable credentials (cookies, authorization headers, etc.)
+    optionsSuccessStatus: 204, // For preflight requests (e.g., DELETE with a custom header)
+};
 
-app.use(cors());
+app.use(cors(corsOptions));
 
 // Use cookie-parser middleware
 app.use(cookieParser());
