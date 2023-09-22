@@ -1,12 +1,18 @@
+import { IUser } from "../user/user.interface";
+
 export type ILoginUser = {
     email: string;
     password: string;
 };
 
 export type ILoginUserResponse = {
+    user: {
+        email: string;
+        role: 'user' | 'admin';
+        needsPasswordChange: boolean;
+    };
     accessToken: string;
     refreshToken?: string;
-    needsPasswordChange: boolean;
 };
 
 export type IRefreshTokenResponse = {

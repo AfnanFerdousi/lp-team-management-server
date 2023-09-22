@@ -14,6 +14,7 @@ const loginUser = async (payload: ILoginUser): Promise<ILoginUserResponse> => {
     if (!userExists) {
         throw new ApiError(httpStatus.NOT_FOUND, "User not found");
     }
+    console.log(userExists)
 
     if (
         userExists.password &&
@@ -22,26 +23,40 @@ const loginUser = async (payload: ILoginUser): Promise<ILoginUserResponse> => {
         throw new ApiError(httpStatus.UNAUTHORIZED, "Password is incorrect");
     }
 
-    // create access token and refresh token
-    const { email: userEmail, role, needsPasswordChange } = userExists;
+    // Map the userExists data to match the structure of ILoginUserResponse.user
+    const {
+        email: userEmail,
+        role,
+        needsPasswordChange,
+    } = userExists;
+
+    // Create access token and refresh token
     const accessToken = jwtHelpers.createToken(
         { email, role },
         config.jwt.jwt_secret as Secret,
-        config.jwt.expires_in as string
+        config.jwt.expires_in as string,
     );
 
     const refreshToken = jwtHelpers.createToken(
         { email, role },
         config.jwt.jwt_refresh_secret as Secret,
-        config.jwt.refresh_expires_in as string
-    )
-    
+        config.jwt.refresh_expires_in as string,
+    );
+
+    // Create a user object that matches the ILoginUserResponse.user structure
+    const user = {
+        email: userEmail,
+        role,
+        needsPasswordChange
+    };
+
     return {
+        user,
         accessToken,
         refreshToken,
-        needsPasswordChange
-    }
+    };
 };
+
 
 
 const refreshToken = async (
