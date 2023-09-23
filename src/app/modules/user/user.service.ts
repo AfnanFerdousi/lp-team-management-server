@@ -177,17 +177,14 @@ const getAllUsers = async (
                             cond: { $eq: ["$$team.status", userStatus] },
                         },
                     },
-                    // Include other user fields you want to retrieve
-                    // Exclude the password field
-                    // For example: username, email, etc.
                     username: 1,
                     email: 1,
-                    // Add other fields as needed
                 },
             });
         }
 
-         users = await User.aggregate(pipeline);
+        users = await User.aggregate(pipeline);
+       return users;
     }
     
     users = User.find()

@@ -88,6 +88,7 @@ const rejectInvitation: RequestHandler = catchAsync(
 
 const getAllUsers = catchAsync(async (req: Request, res: Response) => {
     const { teamName, status } = req.query;
+    console.log("teamnae",teamName)
     const result = await userService.getAllUsers(
         teamName as string,
         status as string,
