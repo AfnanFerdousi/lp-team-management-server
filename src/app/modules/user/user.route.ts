@@ -1,10 +1,12 @@
 import express from "express";
 import userController from "./user.controller";
 import auth from "../../middlewares/auth";
+import validateRequest from "../../middlewares/validateRequest";
+import { UserValidation } from "./user.validation";
 
 const router = express.Router();
 
-router.post("/create-user", userController.createUser);
+router.post("/create-user",validateRequest(UserValidation.createUserValidation), userController.createUser);
 router.patch(
     "/:userId/accept-invitation/:teamName",
     auth("user"),

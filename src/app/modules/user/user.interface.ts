@@ -1,13 +1,11 @@
 import mongoose, {  Model } from "mongoose";
 
 export interface IUser  {
-    _id: any;
     username: string;
     email: string;
     password: string;
     role: "admin" | "user";
     teams: Array<{
-        id: any;
         teamName: string;
         teamCategory: string;
         teamLogo: string;

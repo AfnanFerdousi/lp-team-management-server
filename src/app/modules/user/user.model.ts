@@ -3,9 +3,31 @@ import bcrypt from "bcrypt";
 import { IUser, UserModel } from "./user.interface";
 import config from "../../../config";
 
+const TeamSchema = new Schema(
+    {
+        teamName: {
+            type: String,
+        },
+        teamCategory: {
+            type: String,
+        },
+        teamLogo: {
+            type: String,
+        },
+        teamRole: {
+            type: String,
+        },
+        status: {
+            type: String,
+            enum: ["active", "pending", "rejected"],
+            default: "pending",
+        },
+    },
+    { _id: false }, // Exclude _id field for subdocuments
+);
+
 const UserSchema = new Schema<IUser, UserModel>(
     {
-        // Remove the custom "id" field
         username: {
             type: String,
             required: true,
@@ -31,39 +53,10 @@ const UserSchema = new Schema<IUser, UserModel>(
             enum: ["admin", "user"],
             default: "user",
         },
-        teams: [
-            {
-                id: {
-                    type: Schema.Types.ObjectId,
-                    ref: "Team",
-                },
-                teamName: {
-                    type: String,
-                    unique: true,
-                    required: true,
-                    minlength: 2,
-                    maxlength: 50,
-                },
-                teamCategory: {
-                    type: String,
-                    required: true,
-                    maxlength: 100,
-                },
-                teamLogo: {
-                    type: String,
-                    required: true,
-                },
-                teamRole: {
-                    type: String,
-                    required: true,
-                },
-                status: {
-                    type: String,
-                    enum: ["active", "pending", "rejected"],
-                    default: "pending",
-                },
-            },
-        ],
+        teams: {
+            type: [TeamSchema],
+            default: [],
+        }, // Use the TeamSchema for the teams array
         notifications: [
             {
                 type: {
@@ -137,6 +130,7 @@ UserSchema.pre("save", async function (next) {
 
     next();
 });
+
 const User = mongoose.model<IUser, UserModel>("User", UserSchema);
 
 export default User;

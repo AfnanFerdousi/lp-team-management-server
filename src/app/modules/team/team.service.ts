@@ -66,7 +66,7 @@ const getSingleTeam = async (
         return team;
     } else if (user.role === "user") {
         const normalUser = await User.findOne({ email: user.email });
-        console.log("normalUser", normalUser)
+        console.log("normalUser", normalUser);
         const teamExists =
             normalUser?.teams &&
             normalUser?.teams.some(
@@ -74,16 +74,17 @@ const getSingleTeam = async (
                     team.teamName.toString() === teamName,
             );
         if (teamExists) {
-            const team = await Team.findById({ teamName: teamName });
-            console.log("team fetched", team)
+            const team = await Team.findOne({ teamName: teamName }); // Use findOne here
+            console.log("team fetched", team);
             return team;
         } else {
             throw new ApiError(httpStatus.BAD_REQUEST, "Team doesn't exist");
         }
     }
-    
+
     return null;
 };
+
 
 const deleteTeam = async (teamName: string) => {
     logger.debug(`Attempting to delete team with ID: ${teamName}`);

@@ -49,7 +49,10 @@ const getSingleTeam = catchAsync(async (req: Request, res: Response) => {
         return;
     }
 
-    const result = await teamService.getSingleTeam(req.params.teamName, req.user);
+    const result = await teamService.getSingleTeam(
+        req.params.teamName,
+        req.user,
+    );
 
     sendResponse(res, {
         statusCode: httpStatus.OK,
