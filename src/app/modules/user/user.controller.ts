@@ -99,10 +99,23 @@ const getAllUsers = catchAsync(async (req: Request, res: Response) => {
     });
 });
 
+const getSingleUser = catchAsync(async (req: Request, res: Response) => {
+    const { email } = req.params;
+    console.log(email)
+    const result = await userService.getSingleUser(email);
+    sendResponse<IUser>(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: "User fetched successfully!",
+        data: result,
+    });
+})
+
 export default {
     createUser,
     acceptInvitation,
     sendInvitation,
     rejectInvitation,
-    getAllUsers
+    getAllUsers,
+    getSingleUser
 };

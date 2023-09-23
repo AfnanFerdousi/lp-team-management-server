@@ -21,4 +21,5 @@ router.patch(
     userController.rejectInvitation
 )
 router.get("/", auth("admin"), userController.getAllUsers);
+router.get("/:email", auth("user", "admin"), userController.getSingleUser);
 export const UserRoutes = router;

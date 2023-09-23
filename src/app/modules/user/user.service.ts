@@ -191,11 +191,18 @@ const getAllUsers = async (
     return users;
 };
 
+const getSingleUser = async (userEmail: string): Promise<IUser | null> => {
+    const user = await User.findOne({ email: userEmail });
+    console.log(user)
+    return user;
+}
+
 
 export default {
     createUser,
     acceptInvitation,
     sendInvitation,
     rejectInvitation,
-    getAllUsers
+    getAllUsers,
+    getSingleUser,
 };
