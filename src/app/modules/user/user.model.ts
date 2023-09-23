@@ -49,6 +49,10 @@ const UserSchema = new Schema<IUser, UserModel>(
                     type: String,
                     required: true,
                 },
+                teamRole: {
+                    type: String,
+                    required: true,
+                },
                 status: {
                     type: String,
                     enum: ["active", "pending", "rejected"],
