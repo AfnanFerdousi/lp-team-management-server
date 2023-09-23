@@ -7,7 +7,7 @@ export interface IUser  {
     password: string;
     role: "admin" | "user";
     teams: Array<{
-        [x: string]: any;
+        id: any;
         teamName: string;
         teamCategory: string;
         teamLogo: string;

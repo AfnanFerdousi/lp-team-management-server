@@ -104,6 +104,11 @@
             "date": 1695495680978,
             "name": "E:\\RED LAPTOP\\Interview_tasks\\team-management-api\\logs\\winston\\debug\\tm-2023-24-09-01-debug.log",
             "hash": "331dd1eb319c318bcdd3112d834bed42ad40b6273ed2da3bb139f93d06e98e43"
+        },
+        {
+            "date": 1695499255658,
+            "name": "E:\\RED LAPTOP\\Interview_tasks\\team-management-api\\logs\\winston\\debug\\tm-2023-24-09-02-debug.log",
+            "hash": "78a893a727b46ca11abe55408aebbc5bb40a5375280982cea818846245b84141"
         }
     ],
     "hashType": "sha256"

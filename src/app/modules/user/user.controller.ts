@@ -21,12 +21,13 @@ const createUser: RequestHandler = catchAsync(
 
 const sendInvitation: RequestHandler = catchAsync(
     async (req: Request, res: Response) => {
-        const { email } = req.body; // Assuming you pass the user ID as a parameter
+        const { email, teamRole } = req.body; // Assuming you pass the user ID as a parameter
         const teamName = req.params.teamName; 
 
   const timestamp = new Date();
         const result = await userService.sendInvitation(
             email,
+            teamRole,
             teamName,
             req.user,
         );

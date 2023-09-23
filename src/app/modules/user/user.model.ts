@@ -33,6 +33,10 @@ const UserSchema = new Schema<IUser, UserModel>(
         },
         teams: [
             {
+                id: {
+                    type: Schema.Types.ObjectId,
+                    ref: "Team",
+                },
                 teamName: {
                     type: String,
                     unique: true,

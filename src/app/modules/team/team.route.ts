@@ -7,7 +7,7 @@ import auth from '../../middlewares/auth';
 const router = express.Router();
 
 router.get("/", auth("admin"), teamController.getTeams);
-router.get("/:id", auth("user","admin"), teamController.getSingleTeam);
+router.get("/:teamName", auth("user","admin"), teamController.getSingleTeam);
 router.post(
     "/create-team",
     validateRequest(TeamValidation.createTeamValidation),
@@ -15,12 +15,12 @@ router.post(
     teamController.createTeam,
 );
 router.patch(
-    "/update-team/:id",
+    "/update-team/:teamName",
     validateRequest(TeamValidation.updateTeamValidation),
     auth("admin"),
     teamController.updateTeam,
 )
-router.delete("/:id", auth("admin"), teamController.deleteTeam);
+router.delete("/:teamName", auth("admin"), teamController.deleteTeam);
 
 
 export const TeamRoutes = router;

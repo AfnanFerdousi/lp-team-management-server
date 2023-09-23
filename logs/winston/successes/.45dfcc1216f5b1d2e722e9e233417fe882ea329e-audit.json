@@ -104,6 +104,11 @@
             "date": 1695495680950,
             "name": "E:\\RED LAPTOP\\Interview_tasks\\team-management-api\\logs\\winston\\successes\\tm-2023-24-09-01-success.log",
             "hash": "d6d506c23685e62034f6ecb8e3b63fc93aaa5384902066fcabcebfdbe1582dfa"
+        },
+        {
+            "date": 1695499367903,
+            "name": "E:\\RED LAPTOP\\Interview_tasks\\team-management-api\\logs\\winston\\successes\\tm-2023-24-09-02-success.log",
+            "hash": "1df5544ab03d011bb67043856200fec8ef201a8636669ce09fbe40a6352685e2"
         }
     ],
     "hashType": "sha256"

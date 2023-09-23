@@ -23,11 +23,11 @@ const createTeam = async (team: ITeam): Promise<ITeam | null> => {
     return newTeam;
 };
 
-const updateTeam = async (id: string, team: ITeam) => {
-    logger.debug(`Attempting to update team with ID: ${id}`);
+const updateTeam = async (teamName: string, team: ITeam) => {
+    logger.debug(`Attempting to update team with ID: ${teamName}`);
 
     // Check if a team with the same name already exists
-    const existingTeam = await Team.findOne({ _id: id });
+    const existingTeam = await Team.findOne({ teamName: teamName });
 
     if (!existingTeam) {
         // A team with the same team name already exists, handle this error
@@ -58,35 +58,37 @@ const getTeams = async (): Promise<ITeam[]> => {
 };
 
 const getSingleTeam = async (
-    id: string,
+    teamName: string,
     user: JwtPayload | IUser,
-): Promise<ITeam | [] | null> => {
+): Promise<ITeam | null> => {
     if (user.role === "admin") {
-        const team = await Team.findById({ _id: id });
+        const team = await Team.findOne({ teamName: teamName });
         return team;
     } else if (user.role === "user") {
+        const normalUser = await User.findOne({ email: user.email });
+        console.log("normalUser", normalUser)
         const teamExists =
-            user.teams &&
-            user.teams.some(
-                (team: { _id: { toString: () => string } }) =>
-                    team._id.toString() === id,
+            normalUser?.teams &&
+            normalUser?.teams.some(
+                (team: { teamName: { toString: () => string } }) =>
+                    team.teamName.toString() === teamName,
             );
-
         if (teamExists) {
-            const team = await Team.findById({ _id: id });
+            const team = await Team.findById({ teamName: teamName });
+            console.log("team fetched", team)
             return team;
         } else {
             throw new ApiError(httpStatus.BAD_REQUEST, "Team doesn't exist");
         }
     }
     
-    return [];
+    return null;
 };
 
-const deleteTeam = async (id: string) => {
-    logger.debug(`Attempting to delete team with ID: ${id}`);
+const deleteTeam = async (teamName: string) => {
+    logger.debug(`Attempting to delete team with ID: ${teamName}`);
     
-    const deletedTeam = await Team.findByIdAndDelete(id);
+    const deletedTeam = await Team.findOneAndDelete({ teamName: teamName });
     if (!deletedTeam) {
         errorLogger.error("Team doesn't exist");
          throw new ApiError(

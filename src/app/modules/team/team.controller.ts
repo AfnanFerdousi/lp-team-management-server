@@ -17,7 +17,7 @@ const createTeam = catchAsync(async (req: Request, res: Response) => {
 
 
 const updateTeam = catchAsync(async (req: Request, res: Response) => {
-    const result = await teamService.updateTeam(req.params.id, req.body);
+    const result = await teamService.updateTeam(req.params.teamName, req.body);
 
     sendResponse(res, {
         statusCode: httpStatus.OK,
@@ -49,7 +49,7 @@ const getSingleTeam = catchAsync(async (req: Request, res: Response) => {
         return;
     }
 
-    const result = await teamService.getSingleTeam(req.params.id, req.user);
+    const result = await teamService.getSingleTeam(req.params.teamName, req.user);
 
     sendResponse(res, {
         statusCode: httpStatus.OK,
@@ -60,7 +60,7 @@ const getSingleTeam = catchAsync(async (req: Request, res: Response) => {
 });
 
 const deleteTeam = catchAsync(async (req: Request, res: Response) => {
-    const result = await teamService.deleteTeam(req.params.id);
+    const result = await teamService.deleteTeam(req.params.teamName);
 
     sendResponse(res, {
         statusCode: httpStatus.OK,
