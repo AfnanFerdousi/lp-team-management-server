@@ -151,45 +151,34 @@ const rejectInvitation = async (
     return updatedUser;
 };
 
+
 const getAllUsers = async (
-    teamName: string,
-    userStatus: string,
+    teamName: string | undefined,
+    userStatus: string | undefined,
 ): Promise<IUser[]> => {
     let users;
-    if (teamName || teamName && userStatus) {
-        const pipeline = [];
 
-        // Match users based on the teamName
-        if (teamName) {
-            pipeline.push({
-                $match: { teams: { $elemMatch: { teamName: teamName } } },
-            });
-        }
+    const query: any = {};
 
-        // Filter users within the matched teams based on the status
-        if (userStatus) {
-            pipeline.push({
-                $project: {
-                    teams: {
-                        $filter: {
-                            input: "$teams",
-                            as: "team",
-                            cond: { $eq: ["$$team.status", userStatus] },
-                        },
-                    },
-                    username: 1,
-                    email: 1,
-                },
-            });
-        }
-
-        users = await User.aggregate(pipeline);
-       return users;
+    if (teamName) {
+        query["teams.teamName"] = teamName;
     }
-    
-    users = User.find()
+
+    if (userStatus) {
+        query["teams.status"] = userStatus;
+    }
+
+    try {
+        users = await User.find(query).select("username email teams.$");
+    } catch (error) {
+        console.error(error);
+        throw error; // Handle the error appropriately
+    }
+
     return users;
 };
+
+
 
 const getSingleUser = async (userEmail: string): Promise<IUser | null> => {
     const user = await User.findOne({ email: userEmail });
