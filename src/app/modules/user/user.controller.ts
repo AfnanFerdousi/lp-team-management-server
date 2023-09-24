@@ -31,9 +31,9 @@ const sendInvitation: RequestHandler = catchAsync(
             teamName,
             req.user,
         );
-
           const io = getSocketIO();
-          io.emit("invitationSent", { teamName, user:req.user, timestamp });
+              io.emit("invitationSent", { email, teamName, user: req.user , timestamp});
+          
 
         sendResponse<IUser>(res, {
             statusCode: httpStatus.OK,
@@ -53,8 +53,9 @@ const acceptInvitation: RequestHandler = catchAsync(
         // Get the current timestamp
         const timestamp = new Date();
 
-        const io = getSocketIO();
-        io.emit("invitationAccepted", { teamName, user: req.user, timestamp });
+       const io = getSocketIO();
+           io.emit("invitationAccepted", { teamName, user: req.user, timestamp});
+   
 
         sendResponse<IUser>(res, {
             statusCode: httpStatus.OK,
@@ -75,7 +76,7 @@ const rejectInvitation: RequestHandler = catchAsync(
         const timestamp = new Date();
 
         const io = getSocketIO();
-        io.emit("invitationRejected", { teamName, user: req.user, timestamp });
+            io.emit("invitationRejected", { teamName, user: req.user, timestamp });
 
         sendResponse<IUser>(res, {
             statusCode: httpStatus.OK,
