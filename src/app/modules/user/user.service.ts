@@ -182,7 +182,6 @@ const getAllUsers = async (
 
 const getSingleUser = async (userEmail: string): Promise<IUser | null> => {
     const user = await User.findOne({ email: userEmail });
-    console.log(user)
     return user;
 }
 

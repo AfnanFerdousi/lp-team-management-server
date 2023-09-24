@@ -159,6 +159,21 @@
             "date": 1695564064767,
             "name": "E:\\RED LAPTOP\\Interview_tasks\\team-management-api\\logs\\winston\\debug\\tm-2023-24-09-20-debug.log",
             "hash": "c68f5722f62c6e2bc8f19736c6d4ba2a2687be251eef499d060424cab5cbe539"
+        },
+        {
+            "date": 1695567680373,
+            "name": "E:\\RED LAPTOP\\Interview_tasks\\team-management-api\\logs\\winston\\debug\\tm-2023-24-09-21-debug.log",
+            "hash": "6aa252961d244323ef4891924db5f721df17c031868adff46af225aaa31df7ae"
+        },
+        {
+            "date": 1695572428140,
+            "name": "E:\\RED LAPTOP\\Interview_tasks\\team-management-api\\logs\\winston\\debug\\tm-2023-24-09-22-debug.log",
+            "hash": "ae939af689a82916c87524eb93f311ebb310f0fb52aeec3c9a3723c06a2fc436"
+        },
+        {
+            "date": 1695575160642,
+            "name": "E:\\RED LAPTOP\\Interview_tasks\\team-management-api\\logs\\winston\\debug\\tm-2023-24-09-23-debug.log",
+            "hash": "d6f4b8b339e73f17babcc6c80a5ae59daea819c71ea44d753a1cbba79db96ced"
         }
     ],
     "hashType": "sha256"

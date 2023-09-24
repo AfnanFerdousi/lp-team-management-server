@@ -14,7 +14,6 @@ const loginUser = async (payload: ILoginUser): Promise<ILoginUserResponse> => {
     if (!userExists) {
         throw new ApiError(httpStatus.NOT_FOUND, "User not found");
     }
-    console.log(userExists)
 
     if (
         userExists.password &&
