@@ -154,7 +154,7 @@ const rejectInvitation = async (
 
 const getAllUsers = async (
     teamName: string | undefined,
-    userStatus: string | undefined,
+    userStatus: string | undefined
 ): Promise<IUser[]> => {
     let users;
 
@@ -169,7 +169,7 @@ const getAllUsers = async (
     }
 
     try {
-        users = await User.find(query).select("username email teams.$");
+        users = await User.find(query).select("username email teams");
     } catch (error) {
         console.error(error);
         throw error; // Handle the error appropriately

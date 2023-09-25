@@ -179,6 +179,56 @@
             "date": 1695575160683,
             "name": "E:\\RED LAPTOP\\Interview_tasks\\team-management-api\\logs\\winston\\errors\\tm-2023-24-09-23-error.log",
             "hash": "fa07c10ad2342f17b4bfb0831cdb9da7831264c34f096ca23c30ce07fefd1ce3"
+        },
+        {
+            "date": 1695580895603,
+            "name": "E:\\RED LAPTOP\\Interview_tasks\\team-management-api\\logs\\winston\\errors\\tm-2023-25-09-00-error.log",
+            "hash": "0743aa747272aab7410cf673c91ae3ff08e74243d3c006170cec4cee556f9bc5"
+        },
+        {
+            "date": 1695588140814,
+            "name": "E:\\RED LAPTOP\\Interview_tasks\\team-management-api\\logs\\winston\\errors\\tm-2023-25-09-02-error.log",
+            "hash": "e1225cf8cc8220675b43e8be8914885205c7b488b393d7224121bdd154ef4a02"
+        },
+        {
+            "date": 1695593111874,
+            "name": "E:\\RED LAPTOP\\Interview_tasks\\team-management-api\\logs\\winston\\errors\\tm-2023-25-09-04-error.log",
+            "hash": "6e13744bf389e4eb75e1b3d08f473c72335a87d466f93ee2b1e95a321840c1d1"
+        },
+        {
+            "date": 1695619510921,
+            "name": "E:\\RED LAPTOP\\Interview_tasks\\team-management-api\\logs\\winston\\errors\\tm-2023-25-09-11-error.log",
+            "hash": "7d892df654ac548c43893ce3cb253bc3ac19c55a98f4b14e3b914124d435046d"
+        },
+        {
+            "date": 1695622775801,
+            "name": "E:\\RED LAPTOP\\Interview_tasks\\team-management-api\\logs\\winston\\errors\\tm-2023-25-09-12-error.log",
+            "hash": "16a42b30a91151a08c843b12b40a37652f1697b9de199484412e10c57e854c33"
+        },
+        {
+            "date": 1695625336289,
+            "name": "E:\\RED LAPTOP\\Interview_tasks\\team-management-api\\logs\\winston\\errors\\tm-2023-25-09-13-error.log",
+            "hash": "b643fef57e9e5a2140445bd3d845c93681ba9eca333b1fa93b915a08b505acd3"
+        },
+        {
+            "date": 1695632132846,
+            "name": "E:\\RED LAPTOP\\Interview_tasks\\team-management-api\\logs\\winston\\errors\\tm-2023-25-09-14-error.log",
+            "hash": "c88dfeebbb1fe6fb0a4e728777aa79563f040e16da179f631c27d0b048fcc35e"
+        },
+        {
+            "date": 1695632484779,
+            "name": "E:\\RED LAPTOP\\Interview_tasks\\team-management-api\\logs\\winston\\errors\\tm-2023-25-09-15-error.log",
+            "hash": "5a989452e432b4164e1522147ec7168e48c9b2ea563bf5f984ef040cfaacddbe"
+        },
+        {
+            "date": 1695636055480,
+            "name": "E:\\RED LAPTOP\\Interview_tasks\\team-management-api\\logs\\winston\\errors\\tm-2023-25-09-16-error.log",
+            "hash": "d5006aed87d5c92f7dccab340e05cae37ed7f91d6b7f23156265f4bad7f80d25"
+        },
+        {
+            "date": 1695639658521,
+            "name": "E:\\RED LAPTOP\\Interview_tasks\\team-management-api\\logs\\winston\\errors\\tm-2023-25-09-17-error.log",
+            "hash": "3de9ba6aab2b9e037572dd07a210d15940bd2cc1f53967f6d86820dcb6ae1201"
         }
     ],
     "hashType": "sha256"
