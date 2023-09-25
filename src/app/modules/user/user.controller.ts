@@ -28,8 +28,8 @@ const sendInvitation: RequestHandler = catchAsync(
         const result = await userService.sendInvitation(
             email,
             teamRole,
-            teamName,
             teamLogo,
+            teamName,
             req.user,
         );
           const io = getSocketIO();
