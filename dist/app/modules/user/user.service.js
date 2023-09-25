@@ -53,7 +53,7 @@ const acceptInvitation = (userId, teamName) => __awaiter(void 0, void 0, void 0,
     }, { new: true });
     return updatedUser;
 });
-const sendInvitation = (email, teamRole, teamName, admin) => __awaiter(void 0, void 0, void 0, function* () {
+const sendInvitation = (email, teamRole, teamLogo, teamName, admin) => __awaiter(void 0, void 0, void 0, function* () {
     if (!admin) {
         throw new ApiError_1.default(http_status_1.default.UNAUTHORIZED, "Admin not authenticated");
     }
@@ -81,6 +81,7 @@ const sendInvitation = (email, teamRole, teamName, admin) => __awaiter(void 0, v
         type: "invitation",
         teamName: teamName,
         teamRole: teamRole,
+        teamLogo: teamLogo,
         sentBy: admin === null || admin === void 0 ? void 0 : admin.email, // Optional chaining here
     };
     const teamExist = yield team_model_1.default.findOne({ teamName: teamName });
@@ -90,6 +91,7 @@ const sendInvitation = (email, teamRole, teamName, admin) => __awaiter(void 0, v
     const teamData = {
         teamName: teamName,
         teamRole: teamRole,
+        teamLogo: teamLogo,
         teamCategory: teamExist === null || teamExist === void 0 ? void 0 : teamExist.teamCategory,
         status: "pending",
     };

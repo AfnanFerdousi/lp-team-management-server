@@ -5,13 +5,13 @@ import { Server as SocketIOServer, Socket } from "socket.io";
 let io: SocketIOServer;
 
 export const initializeSocketIO = (server: any) => {
-     io = new SocketIOServer(server, {
-         cors: {
-             origin: "https://team-management-client-three.vercel.app", // Allow connections from this origin
-             methods: ["GET", "POST"],
-             credentials: true,
-         },
-     });
+    io = new SocketIOServer(server, {
+        cors: {
+            origin: "http://localhost:3000", // Allow connections from this origin
+            methods: ["GET", "POST"],
+            credentials: true,
+        },
+    });
 
     io.on("connection", (socket: Socket) => {
         // logger.info("A user connected to Socket.IO");

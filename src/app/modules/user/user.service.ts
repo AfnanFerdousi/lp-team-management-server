@@ -60,6 +60,7 @@ const acceptInvitation = async (
 const sendInvitation = async (
     email: string,
     teamRole: string,
+    teamLogo: string,
     teamName: string,
     admin: JwtPayload | IUser | null,
 ): Promise<IUser | null> => {
@@ -107,6 +108,7 @@ const sendInvitation = async (
         type: "invitation",
         teamName: teamName,
         teamRole: teamRole,
+        teamLogo: teamLogo,
         sentBy: admin?.email, // Optional chaining here
     };
     const teamExist = await Team.findOne({ teamName: teamName });
@@ -117,6 +119,7 @@ const sendInvitation = async (
     const teamData = {
         teamName: teamName,
         teamRole: teamRole,
+        teamLogo: teamLogo,
         teamCategory: teamExist?.teamCategory,
         status: "pending",
     };

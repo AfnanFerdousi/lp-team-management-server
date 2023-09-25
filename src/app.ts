@@ -7,7 +7,7 @@ import cookieParser from "cookie-parser";
 
 const app: Application = express();
 const corsOptions = {
-    origin: "https://team-management-client-three.vercel.app", // Allow requests from this origin
+    origin: "http://localhost:3000", // Allow requests from this origin
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials: true, // Enable credentials (cookies, authorization headers, etc.)
     optionsSuccessStatus: 204, // For preflight requests (e.g., DELETE with a custom header)
@@ -29,14 +29,12 @@ app.use("/api/v1/", routes);
 // global handler
 app.use(globalErrorHandler);
 
-
 app.get("/", (req: Request, res: Response) => {
     res.status(httpStatus.OK).json({
         success: true,
         message: "Server is running",
     });
 });
-
 
 app.use((req: Request, res: Response, next: NextFunction) => {
     res.status(httpStatus.NOT_FOUND).json({
