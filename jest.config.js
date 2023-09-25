@@ -1,14 +1,8 @@
-// jest.config.js
+// eslint-disable-next-line no-undef
 module.exports = {
-    preset: 'ts-jest',
-    testEnvironment: 'node',
-    moduleNameMapper: {
-        '^@/(.*)$': '<rootDir>/src/$1',
+    roots: ["<rootDir>/src"],
+    testMatch: ["**/__tests__/**/*.+(ts|js)", "**/?(*.)+(spec|test).+(ts|js)"],
+    transform: {
+        "^.+\\.(ts|tsx)$": "ts-jest",
     },
-    globals: {
-        'ts-jest': {
-            tsconfig: 'tsconfig.json',
-        },
-    },
-    testMatch: ['**/__tests__/**/*.test.ts'],
 };
