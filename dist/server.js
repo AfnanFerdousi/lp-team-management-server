@@ -15,16 +15,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
 const app_1 = __importDefault(require("./app"));
 const index_1 = __importDefault(require("./config/index"));
-const logger_1 = require("./shared/logger");
+// import { errorLogger, logger } from "./shared/logger"; 
 const socket_1 = require("./socket");
 let server;
 process.on("uncaughtException", (err) => {
     if (err) {
-        logger_1.errorLogger.error("Error connecting");
+        // errorLogger.error("Error connecting");
         console.log(err);
         process.exit(1);
     }
-    logger_1.logger.info("connected");
+    // logger.info("connected");
 });
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
@@ -33,18 +33,18 @@ function main() {
             console.log(`DB Connected`);
             server = app_1.default.listen(index_1.default.port, () => {
                 console.log(`Listening on port ${index_1.default.port}`);
-                logger_1.logger.info(`Application  listening on port ${index_1.default.port}`);
+                // logger.info(`Application  listening on port ${config.port}`);
             });
             (0, socket_1.initializeSocketIO)(server);
         }
         catch (error) {
-            logger_1.errorLogger.error("Failed to connect DB");
+            // errorLogger.error("Failed to connect DB");
             console.log("Failed to connect DB", error);
         }
         process.on("unhandledRejection", (error) => {
             if (server) {
                 server.close(() => {
-                    logger_1.logger.info("Server closed");
+                    // logger.info("Server closed");
                     console.log(error);
                 });
             }
