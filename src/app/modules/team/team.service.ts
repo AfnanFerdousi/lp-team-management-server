@@ -5,39 +5,39 @@ import ApiError from "../../../errors/ApiError";
 import httpStatus from "http-status";
 import { IUser } from "../user/user.interface";
 import { JwtPayload } from "jsonwebtoken";
-import { errorLogger, logger } from "../../../shared/logger";
+// import { errorLogger, logger } from "../../../shared/logger";
 
 const createTeam = async (team: ITeam): Promise<ITeam | null> => {
-    logger.debug("Attempting to create a new team");
+    // logger.debug("Attempting to create a new team");
     // Check if a team with the same name already exists
     const existingTeam = await Team.findOne({ teamName: team.teamName });
 
     if (existingTeam) {
         // A team with the same team name already exists, handle this error
-        errorLogger.error("Team name already in use");
+        // errorLogger.error("Team name already in use");
         throw new ApiError(httpStatus.BAD_REQUEST, "Team name already in use");
     }
 
     const newTeam = await Team.create(team);
-    logger.info("Team created successfully");
+    // logger.info("Team created successfully");
     return newTeam;
 };
 
 const updateTeam = async (teamName: string, team: ITeam) => {
-    logger.debug(`Attempting to update team with ID: ${teamName}`);
+    // logger.debug(`Attempting to update team with ID: ${teamName}`);
 
     // Check if a team with the same name already exists
     const existingTeam = await Team.findOne({ teamName: teamName });
 
     if (!existingTeam) {
         // A team with the same team name already exists, handle this error
-        errorLogger.error("Team doesn't exist");
+        // errorLogger.error("Team doesn't exist");
         throw new ApiError(httpStatus.BAD_REQUEST, "Team doesn't exist");
     }
     if (team.teamName) {
         const exists = await Team.findOne({ teamName: team.teamName });
         if (exists) {
-            errorLogger.error("Team name already in use");
+            // errorLogger.error("Team name already in use");
             throw new ApiError(
                 httpStatus.BAD_REQUEST,
                 "Team name already in use",
@@ -48,7 +48,7 @@ const updateTeam = async (teamName: string, team: ITeam) => {
     const updatedTeam = await Team.findByIdAndUpdate(team.teamName, team, {
         new: true,
     });
-    logger.info("Team updated successfully");
+    // logger.info("Team updated successfully");
     return updatedTeam;
 };
 
@@ -85,11 +85,11 @@ const getSingleTeam = async (
 
 
 const deleteTeam = async (teamName: string) => {
-    logger.debug(`Attempting to delete team with ID: ${teamName}`);
+    // logger.debug(`Attempting to delete team with ID: ${teamName}`);
     
     const deletedTeam = await Team.findOneAndDelete({ teamName: teamName });
     if (!deletedTeam) {
-        errorLogger.error("Team doesn't exist");
+        // errorLogger.error("Team doesn't exist");
          throw new ApiError(
              httpStatus.NOT_FOUND,
              "Team doesn't exist",
@@ -109,7 +109,7 @@ const deleteTeam = async (teamName: string) => {
         }),
     );
 
-    logger.info("Team deleted successfully");
+    // logger.info("Team deleted successfully");
 
     return deletedTeam;
 }

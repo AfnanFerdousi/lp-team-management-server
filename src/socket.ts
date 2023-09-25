@@ -1,6 +1,6 @@
 // Inside socket.ts
 import { Server as SocketIOServer, Socket } from "socket.io";
-import { errorLogger, logger } from "./shared/logger";
+// import { errorLogger, logger } from "./shared/logger";
 
 let io: SocketIOServer;
 
@@ -14,11 +14,11 @@ export const initializeSocketIO = (server: any) => {
      });
 
     io.on("connection", (socket: Socket) => {
-        logger.info("A user connected to Socket.IO");
+        // logger.info("A user connected to Socket.IO");
         console.log("A user connected to Socket.IO");
 
         socket.on("disconnect", () => {
-            errorLogger.error("A user disconnected from Socket.IO");
+            // errorLogger.error("A user disconnected from Socket.IO");
             console.log("A user disconnected from Socket.IO");
         });
     });
