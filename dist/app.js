@@ -10,7 +10,13 @@ const routes_1 = __importDefault(require("./app/routes/routes"));
 const http_status_1 = __importDefault(require("http-status"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const app = (0, express_1.default)();
-app.use((0, cors_1.default)());
+const corsOptions = {
+    origin: "http://localhost:3000",
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    credentials: true,
+    optionsSuccessStatus: 204, // For preflight requests (e.g., DELETE with a custom header)
+};
+app.use((0, cors_1.default)(corsOptions));
 // Use cookie-parser middleware
 app.use((0, cookie_parser_1.default)());
 // parser

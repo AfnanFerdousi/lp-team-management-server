@@ -38,8 +38,26 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importStar(require("mongoose"));
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const config_1 = __importDefault(require("../../../config"));
+const TeamSchema = new mongoose_1.Schema({
+    teamName: {
+        type: String,
+    },
+    teamCategory: {
+        type: String,
+    },
+    teamLogo: {
+        type: String,
+    },
+    teamRole: {
+        type: String,
+    },
+    status: {
+        type: String,
+        enum: ["active", "pending", "rejected"],
+        default: "pending",
+    },
+}, { _id: false });
 const UserSchema = new mongoose_1.Schema({
-    // Remove the custom "id" field
     username: {
         type: String,
         required: true,
@@ -65,27 +83,10 @@ const UserSchema = new mongoose_1.Schema({
         enum: ["admin", "user"],
         default: "user",
     },
-    teams: [
-        {
-            teamName: {
-                type: String,
-                unique: true,
-                required: true,
-                minlength: 2,
-                maxlength: 50,
-            },
-            teamCategory: {
-                type: String,
-                required: true,
-                maxlength: 100,
-            },
-            status: {
-                type: String,
-                enum: ["active", "pending", "rejected"],
-                default: "pending",
-            },
-        },
-    ],
+    teams: {
+        type: [TeamSchema],
+        default: [],
+    },
     notifications: [
         {
             type: {

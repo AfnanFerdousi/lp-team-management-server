@@ -53,7 +53,7 @@ const acceptInvitation = (userId, teamName) => __awaiter(void 0, void 0, void 0,
     }, { new: true });
     return updatedUser;
 });
-const sendInvitation = (email, teamName, admin) => __awaiter(void 0, void 0, void 0, function* () {
+const sendInvitation = (email, teamRole, teamName, admin) => __awaiter(void 0, void 0, void 0, function* () {
     if (!admin) {
         throw new ApiError_1.default(http_status_1.default.UNAUTHORIZED, "Admin not authenticated");
     }
@@ -80,12 +80,17 @@ const sendInvitation = (email, teamName, admin) => __awaiter(void 0, void 0, voi
     const notificationData = {
         type: "invitation",
         teamName: teamName,
+        teamRole: teamRole,
         sentBy: admin === null || admin === void 0 ? void 0 : admin.email, // Optional chaining here
     };
-    const team = yield team_model_1.default.findOne({ teamName: teamName });
+    const teamExist = yield team_model_1.default.findOne({ teamName: teamName });
+    if (!teamExist) {
+        throw new ApiError_1.default(http_status_1.default.NOT_FOUND, "Team not found");
+    }
     const teamData = {
         teamName: teamName,
-        teamCategory: team === null || team === void 0 ? void 0 : team.teamCategory,
+        teamRole: teamRole,
+        teamCategory: teamExist === null || teamExist === void 0 ? void 0 : teamExist.teamCategory,
         status: "pending",
     };
     const updatedUser = yield user_model_1.default.findByIdAndUpdate(user._id, {
@@ -105,43 +110,31 @@ const rejectInvitation = (userId, teamName) => __awaiter(void 0, void 0, void 0,
 });
 const getAllUsers = (teamName, userStatus) => __awaiter(void 0, void 0, void 0, function* () {
     let users;
-    if (teamName || teamName && userStatus) {
-        const pipeline = [];
-        // Match users based on the teamName
-        if (teamName) {
-            pipeline.push({
-                $match: { teams: { $elemMatch: { teamName: teamName } } },
-            });
-        }
-        // Filter users within the matched teams based on the status
-        if (userStatus) {
-            pipeline.push({
-                $project: {
-                    teams: {
-                        $filter: {
-                            input: "$teams",
-                            as: "team",
-                            cond: { $eq: ["$$team.status", userStatus] },
-                        },
-                    },
-                    // Include other user fields you want to retrieve
-                    // Exclude the password field
-                    // For example: username, email, etc.
-                    username: 1,
-                    email: 1,
-                    // Add other fields as needed
-                },
-            });
-        }
-        users = yield user_model_1.default.aggregate(pipeline);
+    const query = {};
+    if (teamName) {
+        query["teams.teamName"] = teamName;
     }
-    users = user_model_1.default.find();
+    if (userStatus) {
+        query["teams.status"] = userStatus;
+    }
+    try {
+        users = yield user_model_1.default.find(query).select("username email teams");
+    }
+    catch (error) {
+        console.error(error);
+        throw error; // Handle the error appropriately
+    }
     return users;
+});
+const getSingleUser = (userEmail) => __awaiter(void 0, void 0, void 0, function* () {
+    const user = yield user_model_1.default.findOne({ email: userEmail });
+    return user;
 });
 exports.default = {
     createUser,
     acceptInvitation,
     sendInvitation,
     rejectInvitation,
-    getAllUsers
+    getAllUsers,
+    getSingleUser,
 };

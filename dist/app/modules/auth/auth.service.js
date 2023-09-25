@@ -27,14 +27,21 @@ const loginUser = (payload) => __awaiter(void 0, void 0, void 0, function* () {
         !(yield user_model_1.default.comparePassword(password, userExists.password))) {
         throw new ApiError_1.default(http_status_1.default.UNAUTHORIZED, "Password is incorrect");
     }
-    // create access token and refresh token
-    const { email: userEmail, role, needsPasswordChange } = userExists;
+    // Map the userExists data to match the structure of ILoginUserResponse.user
+    const { email: userEmail, role, needsPasswordChange, } = userExists;
+    // Create access token and refresh token
     const accessToken = jwtHelpers_1.jwtHelpers.createToken({ email, role }, config_1.default.jwt.jwt_secret, config_1.default.jwt.expires_in);
     const refreshToken = jwtHelpers_1.jwtHelpers.createToken({ email, role }, config_1.default.jwt.jwt_refresh_secret, config_1.default.jwt.refresh_expires_in);
+    // Create a user object that matches the ILoginUserResponse.user structure
+    const user = {
+        email: userEmail,
+        role,
+        needsPasswordChange
+    };
     return {
+        user,
         accessToken,
         refreshToken,
-        needsPasswordChange
     };
 });
 const refreshToken = (refreshToken) => __awaiter(void 0, void 0, void 0, function* () {
