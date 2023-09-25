@@ -7,7 +7,7 @@ let io: SocketIOServer;
 export const initializeSocketIO = (server: any) => {
     io = new SocketIOServer(server, {
         cors: {
-            origin: "http://localhost:3000", // Allow connections from this origin
+            origin: "https://team-management-client-three.vercel.app", // Allow connections from this origin
             methods: ["GET", "POST"],
             credentials: true,
         },
