@@ -29,7 +29,14 @@ app.use("/api/v1/", routes);
 // global handler
 app.use(globalErrorHandler);
 
-// handle not found route
+
+app.get("/", (req: Request, res: Response) => {
+    res.status(httpStatus.OK).json({
+        success: true,
+        message: "Server is running",
+    });
+});
+
 
 app.use((req: Request, res: Response, next: NextFunction) => {
     res.status(httpStatus.NOT_FOUND).json({

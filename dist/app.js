@@ -11,7 +11,7 @@ const http_status_1 = __importDefault(require("http-status"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const app = (0, express_1.default)();
 const corsOptions = {
-    origin: "http://localhost:3000",
+    origin: "https://team-management-client-three.vercel.app",
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials: true,
     optionsSuccessStatus: 204, // For preflight requests (e.g., DELETE with a custom header)
@@ -27,7 +27,12 @@ app.get("env");
 app.use("/api/v1/", routes_1.default);
 // global handler
 app.use(globarErrorHandler_1.default);
-// handle not found route
+app.get("/", (req, res) => {
+    res.status(http_status_1.default.OK).json({
+        success: true,
+        message: "Server is running",
+    });
+});
 app.use((req, res, next) => {
     res.status(http_status_1.default.NOT_FOUND).json({
         success: false,
