@@ -1,6 +1,6 @@
 import mongoose, {  Model } from "mongoose";
 
-export interface IUser  {
+export interface IUser {
     username: string;
     email: string;
     password: string;
@@ -8,7 +8,7 @@ export interface IUser  {
     teams: Array<{
         teamName: string;
         teamCategory: string;
-        teamLogo: string;
+        description: string;
         teamRole: string;
         status: "active" | "pending" | "rejected";
     }>;

@@ -10,10 +10,10 @@ const TeamSchema = new Schema<ITeam, TeamModel>(
             maxlength: 50,
             unique: true,
         },
-        teamLogo: {
-            type: String,
-            required: true,
-        },
+        // teamLogo: {
+        //     type: String,
+        //     required: true,
+        // },
         teamCategory: {
             type: String,
             required: true,

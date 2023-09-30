@@ -11,7 +11,7 @@ const TeamSchema = new Schema(
         teamCategory: {
             type: String,
         },
-        teamLogo: {
+        description: {
             type: String,
         },
         teamRole: {

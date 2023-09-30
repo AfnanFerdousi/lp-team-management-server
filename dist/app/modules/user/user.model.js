@@ -45,7 +45,7 @@ const TeamSchema = new mongoose_1.Schema({
     teamCategory: {
         type: String,
     },
-    teamLogo: {
+    description: {
         type: String,
     },
     teamRole: {

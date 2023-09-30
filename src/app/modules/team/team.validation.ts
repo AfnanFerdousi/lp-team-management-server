@@ -12,7 +12,7 @@ const errorMessages = {
         required: "Team category is required",
     },
     description: "Description is required",
-    teamLogo: "Logo is required",
+    // teamLogo: "Logo is required",
 };
 
 // Define a Zod schema for team validation with custom error messages
@@ -34,9 +34,9 @@ const createTeamValidation = z.object({
         description: z.string().refine(value => !!value.trim(), {
             message: errorMessages.description,
         }),
-        teamLogo: z.string().refine(value => !!value.trim(), {
-            message: errorMessages.teamLogo,
-        }),
+        // teamLogo: z.string().refine(value => !!value.trim(), {
+        //     message: errorMessages.teamLogo,
+        // }),
     }),
 });
 
@@ -52,7 +52,7 @@ const updateTeamValidation = z.object({
             .max(100, { message: errorMessages.teamCategory.maxLength })
             .optional(),
         description: z.string().optional(),
-        teamLogo: z.string().optional(),
+        // teamLogo: z.string().optional(),
     }),
 });
 
